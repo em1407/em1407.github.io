@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emily Spano — BI Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #0a0a0f; color: #e8e4dd; min-height: 100vh; overflow-x: hidden; }
+
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 3rem; border-bottom: 1px solid #1a1a28;
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #0a0a0fee; backdrop-filter: blur(12px); z-index: 100;
+}
+.nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.15em; color: #7c6fff; text-transform: uppercase; text-decoration: none; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 13px; color: #6a6870; text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: #e8e4dd; }
+
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  max-width: 1100px; margin: 0 auto; padding: 8rem 3rem 4rem;
+  display: grid; grid-template-columns: 1fr 380px; gap: 5rem; align-items: center;
+}
+
+.eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.25em; color: #7c6fff; text-transform: uppercase; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: #7c6fff; }
+
+.hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 6vw, 5rem); font-weight: 400; line-height: 1.05; color: #f0ece4; margin-bottom: 1.5rem; }
+.hero-title em { font-style: italic; color: #7c6fff; display: block; }
+
+.hero-sub { font-size: 1rem; color: #58565e; line-height: 1.85; max-width: 480px; margin-bottom: 2.5rem; }
+.hero-sub strong { color: #8a8680; font-weight: 500; }
+
+.cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn-primary { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 12px 24px; background: #7c6fff; color: #f0ece4; border: none; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
+.btn-primary:hover { background: #9b8fff; }
+.btn-secondary { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 12px 24px; background: transparent; color: #6a6870; border: 1px solid #2a2a3e; border-radius: 8px; text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+.btn-secondary:hover { color: #e8e4dd; border-color: #4a4858; }
+
+.hero-meta { display: flex; gap: 2rem; }
+.meta-item { }
+.meta-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #f0ece4; line-height: 1; }
+.meta-num em { color: #7c6fff; font-style: normal; font-size: 1.2rem; }
+.meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: #3a3848; text-transform: uppercase; margin-top: 4px; }
+
+.hero-photo { position: relative; }
+.photo-wrap { width: 100%; aspect-ratio: 3/4; border-radius: 20px; overflow: hidden; border: 1px solid #1e1e2c; background: #111118; }
+.photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(15%); }
+.photo-accent { position: absolute; bottom: -1rem; right: -1rem; width: 120px; height: 120px; border-radius: 12px; background: #111118; border: 1px solid #1e1e2c; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+.photo-accent-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #7c6fff; line-height: 1; }
+.photo-accent-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.12em; color: #3a3848; text-transform: uppercase; text-align: center; }
+
+/* Tools strip */
+.tools-strip { border-top: 1px solid #1a1a28; border-bottom: 1px solid #1a1a28; padding: 1.5rem 3rem; overflow: hidden; white-space: nowrap; }
+.tools-inner { display: inline-flex; gap: 2.5rem; animation: scroll 20s linear infinite; }
+.tools-inner:hover { animation-play-state: paused; }
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.tool-item { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: #2a2838; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+.tool-item span { color: #7c6fff; font-size: 8px; }
+
+/* Featured section */
+.featured { max-width: 1100px; margin: 0 auto; padding: 4rem 3rem 6rem; }
+.section-label { display: flex; align-items: center; gap: 14px; margin-bottom: 2rem; }
+.section-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; color: #7c6fff; text-transform: uppercase; white-space: nowrap; }
+.section-line { flex: 1; height: 1px; background: #1a1a28; }
+
+.featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.feat-card { background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 14px; padding: 1.5rem; transition: border-color 0.2s, transform 0.2s; text-decoration: none; display: block; }
+.feat-card:hover { border-color: #7c6fff44; transform: translateY(-2px); }
+.feat-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+.feat-cat { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: #7c6fff; text-transform: uppercase; margin-bottom: 0.5rem; }
+.feat-title { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #f0ece4; font-weight: 400; line-height: 1.3; margin-bottom: 0.5rem; }
+.feat-desc { font-size: 0.8rem; color: #4a4858; line-height: 1.6; }
+
+.view-all { display: flex; justify-content: center; }
+.view-all a { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #7c6fff; text-decoration: none; display: flex; align-items: center; gap: 8px; border: 1px solid #2a2a3e; padding: 10px 24px; border-radius: 8px; transition: border-color 0.2s, color 0.2s; }
+.view-all a:hover { border-color: #7c6fff; color: #9b8fff; }
+
+footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; }
+.footer-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #2a2838; letter-spacing: 0.1em; }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; padding-top: 6rem; }
+  .featured-grid { grid-template-columns: 1fr; }
+  nav, .tools-strip, .featured, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Emily Spano</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="eyebrow">BI Analyst · Rome, Italy</p>
+    <h1 class="hero-title">Turning data<br>into <em>decisions.</em></h1>
+    <p class="hero-sub">I'm Emily, a <strong>Business Intelligence Analyst</strong> at Metriks.ai. I build dashboards, reporting systems, and data-driven tools that help organisations make better decisions — faster.</p>
+    <div class="cta-row">
+      <a href="projects.html" class="btn-primary">View my projects</a>
+      <a href="contact.html" class="btn-secondary">Get in touch</a>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-num">1<em>yr</em></div>
+        <div class="meta-label">Experience</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-num">8</div>
+        <div class="meta-label">Projects</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-num">4</div>
+        <div class="meta-label">Languages</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="photo-wrap">
+      <img src="assets/emily.jpg" alt="Emily Spano" onerror="this.parentElement.style.background='#1a1a28'">
+    </div>
+    <div class="photo-accent">
+      <div class="photo-accent-num">BI</div>
+      <div class="photo-accent-label">Power BI<br>DAX · SQL</div>
+    </div>
+  </div>
+</section>
+
+<div class="tools-strip">
+  <div class="tools-inner">
+    <span class="tool-item"><span>▸</span> Power BI</span>
+    <span class="tool-item"><span>▸</span> DAX</span>
+    <span class="tool-item"><span>▸</span> Power Query</span>
+    <span class="tool-item"><span>▸</span> SQL</span>
+    <span class="tool-item"><span>▸</span> Tableau</span>
+    <span class="tool-item"><span>▸</span> R</span>
+    <span class="tool-item"><span>▸</span> Random Forest</span>
+    <span class="tool-item"><span>▸</span> Azure</span>
+    <span class="tool-item"><span>▸</span> Data Modeling</span>
+    <span class="tool-item"><span>▸</span> Shiny</span>
+    <span class="tool-item"><span>▸</span> Python</span>
+    <span class="tool-item"><span>▸</span> KPI Reporting</span>
+    <span class="tool-item"><span>▸</span> Power BI</span>
+    <span class="tool-item"><span>▸</span> DAX</span>
+    <span class="tool-item"><span>▸</span> Power Query</span>
+    <span class="tool-item"><span>▸</span> SQL</span>
+    <span class="tool-item"><span>▸</span> Tableau</span>
+    <span class="tool-item"><span>▸</span> R</span>
+    <span class="tool-item"><span>▸</span> Random Forest</span>
+    <span class="tool-item"><span>▸</span> Azure</span>
+    <span class="tool-item"><span>▸</span> Data Modeling</span>
+    <span class="tool-item"><span>▸</span> Shiny</span>
+    <span class="tool-item"><span>▸</span> Python</span>
+    <span class="tool-item"><span>▸</span> KPI Reporting</span>
+  </div>
+</div>
+
+<section class="featured">
+  <div class="section-label">
+    <span class="section-name">Featured projects</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="featured-grid">
+    <a href="https://github.com/em1407/Urban-Development-Project" target="_blank" class="feat-card">
+      <div class="feat-icon">🏙️</div>
+      <p class="feat-cat">ML · R · Shiny</p>
+      <h3 class="feat-title">Smart Service Shiny App for Urban Development</h3>
+      <p class="feat-desc">Random Forest models predicting social quality indicators across Amsterdam and The Hague. Commissioned by Amvest.</p>
+    </a>
+    <a href="projects.html" class="feat-card">
+      <div class="feat-icon">🏢</div>
+      <p class="feat-cat">Power BI · DAX</p>
+      <h3 class="feat-title">Enterprise Business Intelligence Suite</h3>
+      <p class="feat-desc">Full BI report for a real client — accounting, order management, sales and revenue monitoring.</p>
+    </a>
+    <a href="https://public.tableau.com/app/profile/emily.spano6554/viz/SalesDashboardKPI_17346089105640/SalesDashboard" target="_blank" class="feat-card">
+      <div class="feat-icon">📈</div>
+      <p class="feat-cat">Tableau</p>
+      <h3 class="feat-title">Sales KPI Dashboard</h3>
+      <p class="feat-desc">Advanced interactive Tableau dashboard for sales performance tracking with dynamic KPI visualisations.</p>
+    </a>
+  </div>
+  <div class="view-all">
+    <a href="projects.html">View all projects →</a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">Emily Spano — Data Portfolio</span>
+  <span class="footer-text">BI Analyst · Rome, Italy</span>
+</footer>
+</body>
+</html>

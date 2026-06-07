@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Emily Spano</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #0a0a0f;
+  color: #e8e4dd;
+  min-height: 100vh;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  border-bottom: 1px solid #1a1a28;
+  position: sticky;
+  top: 0;
+  background: #0a0a0fee;
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  color: #6a6870;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover, .nav-links a.active { color: #e8e4dd; }
+
+/* Hero */
+.hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 3rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-left {}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #f0ece4;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: #7c6fff;
+}
+
+.hero-bio {
+  font-size: 1rem;
+  color: #6a6870;
+  line-height: 1.85;
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.hero-bio strong {
+  color: #c8c4bc;
+  font-weight: 500;
+}
+
+.skills-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.skill-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 5px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  border: 1px solid #2a2a3e;
+  color: #5a5868;
+  background: #11111a;
+}
+
+.skill-pill.highlight {
+  border-color: #3d2d7a;
+  color: #9b8fff;
+  background: #1a1030;
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  background: #7c6fff;
+  color: #f0ece4;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover { background: #9b8fff; }
+
+.btn-secondary {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  background: transparent;
+  color: #6a6870;
+  border: 1px solid #2a2a3e;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.btn-secondary:hover { color: #e8e4dd; border-color: #4a4858; }
+
+/* Photo */
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #1e1e2c;
+  background: #111118;
+  position: relative;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(20%);
+}
+
+.photo-label {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  background: #0a0a0f99;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #2a2a3e;
+}
+
+/* Stats strip */
+.stats-strip {
+  max-width: 1100px;
+  margin: 0 auto 0;
+  padding: 0 3rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #1a1a28;
+  border: 1px solid #1a1a28;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.stat {
+  background: #0e0e18;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  color: #f0ece4;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.stat-num em { color: #7c6fff; font-style: normal; }
+
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #3a3848;
+  text-transform: uppercase;
+}
+
+/* Timeline */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 3rem 6rem;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 3rem 0 2.5rem;
+}
+
+.section-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: #1a1a28;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: #1e1e2c;
+}
+
+.tl-item {
+  position: relative;
+  padding: 0 0 3rem 2.5rem;
+}
+
+.tl-item:last-child { padding-bottom: 0; }
+
+.tl-dot {
+  position: absolute;
+  left: -2.5rem;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #7c6fff;
+  border: 2px solid #0a0a0f;
+  box-shadow: 0 0 0 1px #7c6fff44;
+}
+
+.tl-period {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.tl-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: #f0ece4;
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+}
+
+.tl-text {
+  font-size: 0.875rem;
+  color: #58565e;
+  line-height: 1.8;
+  max-width: 640px;
+}
+
+.tl-text strong {
+  color: #8a8680;
+  font-weight: 500;
+}
+
+.tl-badge {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  padding: 3px 9px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-top: 0.75rem;
+  background: #1a1030;
+  color: #9b8fff;
+  border: 1px solid #3a2a70;
+}
+
+/* Tools grid */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.tool-card {
+  background: #0e0e18;
+  border: 1px solid #1e1e2c;
+  border-radius: 12px;
+  padding: 1.1rem;
+  transition: border-color 0.2s;
+}
+
+.tool-card:hover { border-color: #7c6fff44; }
+
+.tool-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.tool-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #c8c4bc;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.tool-level {
+  font-size: 11px;
+  color: #3a3848;
+}
+
+.tool-bar {
+  margin-top: 0.6rem;
+  height: 2px;
+  background: #1a1a28;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tool-fill {
+  height: 100%;
+  background: #7c6fff;
+  border-radius: 2px;
+}
+
+footer {
+  border-top: 1px solid #1a1a28;
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #2a2838;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-photo { max-width: 280px; }
+  .stats-strip { grid-template-columns: repeat(2, 1fr); }
+  nav, .hero, .main, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .stats-strip { margin-left: 1.5rem; margin-right: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Emily Spano</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="eyebrow">About me</p>
+    <h1 class="hero-title">Business Intelligence<br><em>Analyst</em></h1>
+    <p class="hero-bio">
+      I'm Emily, a <strong>BI Analyst based in Rome, Italy</strong>, currently working at Metriks.ai where I deliver data-driven dashboards and reporting solutions to clients across multiple industries.<br><br>
+      My background bridges <strong>linguistics, tourism management, and data science</strong> — an unusual path that gives me a distinct perspective: I translate complex data into clear, human stories that drive decisions.
+    </p>
+    <div class="skills-row">
+      <span class="skill-pill highlight">Power BI</span>
+      <span class="skill-pill highlight">DAX</span>
+      <span class="skill-pill highlight">Power Query</span>
+      <span class="skill-pill">SQL</span>
+      <span class="skill-pill">R</span>
+      <span class="skill-pill">Tableau</span>
+      <span class="skill-pill">Azure</span>
+      <span class="skill-pill">Python</span>
+    </div>
+    <div class="cta-row">
+      <a href="projects.html" class="btn-primary">View my projects</a>
+      <a href="contact.html" class="btn-secondary">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="YOUR_PHOTO_URL" alt="Emily Spano" onerror="this.style.display='none'">
+    <div class="photo-label">Emily Spano · Rome</div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat">
+    <div class="stat-num">1<em>+</em></div>
+    <div class="stat-label">Years experience</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">8</div>
+    <div class="stat-label">Projects completed</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3<em>+</em></div>
+    <div class="stat-label">Industries served</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Languages spoken</div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- Timeline -->
+  <div class="section-label">
+    <span class="section-name">My story</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-period">2015 — 2020</p>
+      <h3 class="tl-title">Linguistic High School & Language Immersion</h3>
+      <p class="tl-text">
+        A passion for travel and languages led me to a Linguistic High School, where I took part in immersive language trips across Europe and the US — Munich, Regensburg, Nice, Paris, and Orlando. Living with host families and attending language courses gave me a deep appreciation for different cultures and sharpened my ability to communicate across contexts.
+      </p>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-period">2020 — 2023</p>
+      <h3 class="tl-title">Bachelor's in Tourism Management · Netherlands</h3>
+      <p class="tl-text">
+        I moved to the Netherlands to pursue a Bachelor's degree in Tourism Management — a natural extension of my love for travel and how industries work. Working on real-life projects with tourism companies and collaborating in international teams were formative experiences. In my second year, I completed an internship in <strong>Stockholm, Sweden</strong>, where I discovered the concept of slow tourism and developed a lasting curiosity for Nordic culture.
+      </p>
+      <span class="tl-badge">International experience</span>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-period">2023 — 2024</p>
+      <h3 class="tl-title">Master's in Business Intelligence</h3>
+      <p class="tl-text">
+        During my business studies, a Business Intelligence exam changed everything. I immediately recognized the potential of data and decided to pursue a Master's specialisation in BI. Every step of the program was engaging — the challenge of bringing data to life was something I found genuinely satisfying. After graduating, I continued building projects independently, several of which you can find in my portfolio.
+      </p>
+      <span class="tl-badge">Master's degree</span>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-period">2024 — Present</p>
+      <h3 class="tl-title">BI Analyst · Metriks.ai · Rome, Italy</h3>
+      <p class="tl-text">
+        Currently working as a Business Intelligence Analyst at Metriks.ai, delivering personalised and strategic dashboards to clients across multiple sectors. On a daily basis I monitor the entire data workflow, build reporting solutions in Power BI, and work closely with stakeholders to continuously refine the output. Outside of work I keep active at the gym, explore new places whenever possible, and am always focused on learning something new.
+      </p>
+      <span class="tl-badge">Current role</span>
+    </div>
+
+  </div>
+
+  <!-- Tools -->
+  <div class="section-label">
+    <span class="section-name">Tools & skills</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">📊</div>
+      <div class="tool-name">Power BI</div>
+      <div class="tool-level">Advanced</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:90%"></div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">⚡</div>
+      <div class="tool-name">DAX</div>
+      <div class="tool-level">Advanced</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:85%"></div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🔄</div>
+      <div class="tool-name">Power Query</div>
+      <div class="tool-level">Advanced</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:85%"></div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🗄️</div>
+      <div class="tool-name">SQL</div>
+      <div class="tool-level">Intermediate</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:60%"></div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">📈</div>
+      <div class="tool-name">Tableau</div>
+      <div class="tool-level">Intermediate</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:65%"></div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">📐</div>
+      <div class="tool-name">R</div>
+      <div class="tool-level">Intermediate</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:65%"></div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">☁️</div>
+      <div class="tool-name">Azure</div>
+      <div class="tool-level">Learning</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:35%"></div></div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">🐍</div>
+      <div class="tool-name">Python</div>
+      <div class="tool-level">Learning</div>
+      <div class="tool-bar"><div class="tool-fill" style="width:30%"></div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <span class="footer-text">Emily Spano — Data Portfolio</span>
+  <span class="footer-text">BI Analyst · Rome, Italy</span>
+</footer>
+
+</body>
+</html>

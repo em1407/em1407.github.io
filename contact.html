@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Emily Spano</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #0a0a0f; color: #e8e4dd; min-height: 100vh; }
+
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 3rem; border-bottom: 1px solid #1a1a28;
+  position: sticky; top: 0; background: #0a0a0fee;
+  backdrop-filter: blur(12px); z-index: 100;
+}
+.nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.15em; color: #7c6fff; text-transform: uppercase; text-decoration: none; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 13px; color: #6a6870; text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: #e8e4dd; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem 6rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+
+.left { }
+.eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.25em; color: #7c6fff; text-transform: uppercase; margin-bottom: 1rem; }
+.page-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 400; line-height: 1.1; color: #f0ece4; margin-bottom: 1.25rem; }
+.page-title em { font-style: italic; color: #7c6fff; }
+.page-sub { font-size: 0.95rem; color: #58565e; line-height: 1.8; margin-bottom: 3rem; }
+
+.contact-cards { display: flex; flex-direction: column; gap: 1rem; }
+.contact-card { background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; align-items: center; gap: 1.25rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+.contact-card:hover { border-color: #7c6fff44; transform: translateX(4px); }
+.card-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.icon-email { background: #1a1030; }
+.icon-linkedin { background: #0c1c2d; }
+.card-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: #3a3848; text-transform: uppercase; margin-bottom: 3px; }
+.card-value { font-size: 0.9rem; color: #c8c4bc; }
+
+.divider { height: 1px; background: #1a1a28; margin: 2.5rem 0; }
+
+.availability { display: flex; align-items: center; gap: 10px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: #4dffaa; box-shadow: 0 0 8px #4dffaa66; flex-shrink: 0; }
+.avail-text { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #4dffaa; text-transform: uppercase; }
+
+/* Form */
+.form-side { }
+.form-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; color: #3a3848; text-transform: uppercase; margin-bottom: 1.75rem; }
+
+.form-group { margin-bottom: 1.25rem; }
+.form-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: #3a3848; text-transform: uppercase; display: block; margin-bottom: 0.5rem; }
+
+.form-input, .form-textarea {
+  width: 100%; background: #0e0e18; border: 1px solid #1e1e2c;
+  border-radius: 10px; padding: 0.85rem 1rem;
+  font-family: 'Outfit', sans-serif; font-size: 0.875rem;
+  color: #e8e4dd; outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus { border-color: #7c6fff; }
+.form-input::placeholder, .form-textarea::placeholder { color: #2a2838; }
+.form-textarea { resize: vertical; min-height: 130px; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.btn-submit {
+  width: 100%; font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 14px; background: #7c6fff; color: #f0ece4;
+  border: none; border-radius: 10px; cursor: pointer;
+  transition: background 0.2s; margin-top: 0.5rem;
+}
+.btn-submit:hover { background: #9b8fff; }
+
+.form-note { font-size: 11px; color: #2a2838; text-align: center; margin-top: 0.75rem; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
+
+footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; max-width: 1100px; margin: 0 auto; }
+.footer-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #2a2838; letter-spacing: 0.1em; }
+
+@media (max-width: 900px) {
+  .page { grid-template-columns: 1fr; gap: 3rem; }
+  nav, .page, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Emily Spano</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="page">
+  <div class="left">
+    <p class="eyebrow">Contact</p>
+    <h1 class="page-title">Let's <em>work<br>together.</em></h1>
+    <p class="page-sub">Whether you're looking for a BI Analyst, want to discuss a project, or just want to connect — feel free to reach out.</p>
+
+    <div class="contact-cards">
+      <a href="mailto:emilyspano00@gmail.com" class="contact-card">
+        <div class="card-icon icon-email">✉️</div>
+        <div>
+          <div class="card-label">Email</div>
+          <div class="card-value">emilyspano00@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/emily-spano-7a4927175/" target="_blank" class="contact-card">
+        <div class="card-icon icon-linkedin">💼</div>
+        <div>
+          <div class="card-label">LinkedIn</div>
+          <div class="card-value">emily-spano-7a4927175</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="availability">
+      <div class="dot"></div>
+      <span class="avail-text">Open to new opportunities</span>
+    </div>
+  </div>
+
+  <div class="form-side">
+    <p class="form-title">Send a message</p>
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" name="name" class="form-input" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subject</label>
+        <input type="text" name="subject" class="form-input" placeholder="What's this about?">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea name="message" class="form-textarea" placeholder="Tell me more..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send message →</button>
+      <p class="form-note">I'll get back to you within 48 hours.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">Emily Spano — Data Portfolio</span>
+  <span class="footer-text">BI Analyst · Rome, Italy</span>
+</footer>
+</body>
+</html>
