@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urban Development Shiny App — Emily Spano</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #0a0a0f; color: #e8e4dd; min-height: 100vh; }
+
+nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem 3rem; border-bottom: 1px solid #1a1a28;
+  position: sticky; top: 0; background: #0a0a0fee;
+  backdrop-filter: blur(12px); z-index: 100;
+}
+.nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.15em; color: #7c6fff; text-transform: uppercase; text-decoration: none; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 13px; color: #6a6870; text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: #e8e4dd; }
+.nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #3a3848; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.nav-back:hover { color: #7c6fff; }
+
+/* Hero */
+.hero { max-width: 900px; margin: 0 auto; padding: 4rem 3rem 2rem; }
+.hero-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+.badge-ml { background: #1a1030; color: #9b8fff; border: 1px solid #3a2a70; }
+.badge-r { background: #0c1e16; color: #4dffaa; border: 1px solid #1a4830; }
+.badge-client { background: #130e00; color: #ffd166; border: 1px solid #4a3900; }
+
+.hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.1; color: #f0ece4; margin-bottom: 1rem; }
+.hero-title em { font-style: italic; color: #7c6fff; }
+.hero-sub { font-size: 1rem; color: #6a6870; line-height: 1.8; max-width: 680px; margin-bottom: 2rem; }
+
+.hero-cta { display: flex; gap: 10px; }
+.btn-github { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; padding: 10px 20px; background: transparent; color: #7c6fff; border: 1px solid #3a2a70; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
+.btn-github:hover { background: #1a1030; }
+
+/* Video/preview area */
+.media-wrap { max-width: 900px; margin: 0 auto 0; padding: 0 3rem 3rem; }
+.video-container { width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #1e1e2c; background: #0e0e18; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; position: relative; }
+.video-container video { width: 100%; height: 100%; object-fit: cover; }
+.video-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; color: #3a3848; }
+.video-placeholder-icon { font-size: 3rem; }
+.video-placeholder-text { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; }
+
+/* Stats */
+.stats-row { max-width: 900px; margin: 0 auto; padding: 0 3rem 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #1a1a28; border-radius: 14px; overflow: hidden; border: 1px solid #1a1a28; }
+.stat { background: #0e0e18; padding: 1.25rem; text-align: center; }
+.stat-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #f0ece4; line-height: 1; margin-bottom: 4px; }
+.stat-num em { color: #7c6fff; font-style: normal; font-size: 1.2rem; }
+.stat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: #3a3848; text-transform: uppercase; }
+
+/* Main content */
+.content { max-width: 900px; margin: 0 auto; padding: 1rem 3rem 2rem; }
+
+.section-label { display: flex; align-items: center; gap: 14px; margin: 3rem 0 2rem; }
+.section-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; color: #7c6fff; text-transform: uppercase; white-space: nowrap; }
+.section-line { flex: 1; height: 1px; background: #1a1a28; }
+
+/* Intuitive cards */
+.intuitive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.int-card { background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 14px; padding: 1.5rem; }
+.int-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+.int-title { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #f0ece4; font-weight: 400; margin-bottom: 0.5rem; }
+.int-text { font-size: 0.82rem; color: #58565e; line-height: 1.75; }
+
+/* Problem / solution */
+.prose-block { margin-bottom: 2rem; }
+.prose-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #f0ece4; font-weight: 400; margin-bottom: 0.75rem; }
+.prose-title em { font-style: italic; color: #7c6fff; }
+.prose-text { font-size: 0.9rem; color: #58565e; line-height: 1.9; max-width: 720px; }
+.prose-text strong { color: #8a8680; font-weight: 500; }
+
+/* Pipeline */
+.pipeline { display: flex; flex-direction: column; gap: 0; }
+.pipeline-step { display: grid; grid-template-columns: 48px 1fr; gap: 1.5rem; padding-bottom: 2.5rem; position: relative; }
+.pipeline-step::before { content: ''; position: absolute; left: 23px; top: 48px; bottom: 0; width: 1px; background: #1a1a28; }
+.pipeline-step:last-child::before { display: none; }
+.step-num { width: 48px; height: 48px; border-radius: 12px; background: #111118; border: 1px solid #1e1e2c; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 11px; color: #7c6fff; flex-shrink: 0; }
+.step-body { padding-top: 0.25rem; }
+.step-title { font-size: 0.95rem; font-weight: 500; color: #c8c4bc; margin-bottom: 0.4rem; }
+.step-text { font-size: 0.82rem; color: #58565e; line-height: 1.75; }
+
+/* Technical section */
+.tech-section { background: #08080f; border-top: 1px solid #1a1a28; padding: 4rem 3rem 6rem; }
+.tech-inner { max-width: 900px; margin: 0 auto; }
+
+.tech-intro { font-size: 0.9rem; color: #58565e; line-height: 1.9; margin-bottom: 2rem; max-width: 720px; }
+
+.code-block { margin-bottom: 2.5rem; }
+.code-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
+.code-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #7c6fff; text-transform: uppercase; }
+.code-lang { font-family: 'DM Mono', monospace; font-size: 9px; color: #2a2838; background: #111118; border: 1px solid #1e1e2c; padding: 2px 8px; border-radius: 4px; }
+.code-pre { background: #0d0d18; border: 1px solid #1e1e2c; border-radius: 12px; padding: 1.5rem; overflow-x: auto; }
+.code-pre code { font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.8; color: #c8c4bc; white-space: pre; }
+.code-comment { color: #3a3848; }
+.code-keyword { color: #9b8fff; }
+.code-function { color: #4dffaa; }
+.code-string { color: #ffd166; }
+.code-number { color: #ff9966; }
+
+.code-explainer { background: #0e0e18; border: 1px solid #1e1e2c; border-left: 3px solid #7c6fff; border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin-top: 0.75rem; font-size: 0.82rem; color: #58565e; line-height: 1.75; }
+.code-explainer strong { color: #8a8680; font-weight: 500; }
+
+.models-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin: 1.5rem 0; }
+.model-card { background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 10px; padding: 1rem; }
+.model-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: #7c6fff; text-transform: uppercase; margin-bottom: 0.4rem; }
+.model-metric { font-size: 0.78rem; color: #3a3848; line-height: 1.6; }
+.model-winner { border-color: #3a2a70; background: #1a1030; }
+.model-winner .model-name { color: #9b8fff; }
+.winner-badge { font-family: 'DM Mono', monospace; font-size: 8px; color: #4dffaa; background: #0c1e16; border: 1px solid #1a4830; border-radius: 20px; padding: 2px 7px; margin-left: 6px; }
+
+footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+.footer-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #2a2838; letter-spacing: 0.1em; }
+
+@media (max-width: 768px) {
+  nav, .hero, .media-wrap, .content, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); margin-left: 1.5rem; margin-right: 1.5rem; }
+  .intuitive-grid { grid-template-columns: 1fr; }
+  .models-grid { grid-template-columns: 1fr; }
+  .tech-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="projects.html" class="nav-back">← Back to projects</a>
+  <a href="index.html" class="nav-logo">Emily Spano</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-meta">
+    <span class="badge badge-client">Client project</span>
+    <span class="badge badge-r">R</span>
+    <span class="badge badge-ml">Random Forest</span>
+    <span class="badge badge-ml">Shiny App</span>
+    <span class="badge badge-ml">Machine Learning</span>
+  </div>
+  <h1 class="hero-title">Smart Service Shiny App<br>for <em>Urban Development</em></h1>
+  <p class="hero-sub">A predictive tool commissioned by Amvest — a Dutch urban development company — to help city planners decide which urban features to include in new neighborhoods in order to maximise resident wellbeing.</p>
+
+</section>
+
+<!-- Video -->
+<div class="media-wrap">
+  <div class="video-container" style="aspect-ratio:auto; height: auto;">
+    <img src="assets/urban-dev-preview.png" alt="Amvest Smart Service Shiny App — The Hague loneliness map" style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat">
+    <div class="stat-num">2</div>
+    <div class="stat-label">Cities covered</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5</div>
+    <div class="stat-label">ML models tested</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">50</div>
+    <div class="stat-label">Urban features</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">1<em>st</em></div>
+    <div class="stat-label">Real client project</div>
+  </div>
+</div>
+
+<!-- Intuitive overview -->
+<section class="content">
+
+  <div class="section-label">
+    <span class="section-name">What this project does</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="intuitive-grid">
+    <div class="int-card">
+      <div class="int-icon">🏙️</div>
+      <h3 class="int-title">The challenge</h3>
+      <p class="int-text">When designing a new neighborhood, urban planners face a key question: which features — parks, offices, sports facilities — actually make residents happier and more socially connected? Traditionally this relied on intuition. We built a data-driven answer.</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon">🤖</div>
+      <h3 class="int-title">The solution</h3>
+      <p class="int-text">We trained machine learning models on data from existing Dutch neighborhoods to learn which urban features correlate with social wellbeing. The best model — a Random Forest — was then embedded in an interactive app that planners can use in real time.</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon">🗺️</div>
+      <h3 class="int-title">The result</h3>
+      <p class="int-text">A Shiny App where you select a city (Amsterdam or The Hague), adjust urban feature values, and instantly see how predicted social indicators like loneliness, safety, and quality of life change — neighborhood by neighborhood, on an interactive map.</p>
+    </div>
+  </div>
+
+  <!-- How it works - simple -->
+  <div class="section-label">
+    <span class="section-name">How it works</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipeline-step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <div class="step-title">Data collection & cleaning</div>
+        <p class="step-text">We gathered publicly available data on Dutch neighborhoods — everything from the number of green spaces to crime rates and public transport access. The raw dataset had hundreds of columns, many of which were redundant or irrelevant, so we ran a correlation analysis to keep only the most meaningful features.</p>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <div class="step-title">Handling missing values intelligently</div>
+        <p class="step-text">Real-world data is never clean. We used a smart imputation strategy: for low-skewness variables we filled missing values with the mean, for medium-skewness we used k-Nearest Neighbors (KNN), and for high-skewness we used the median. This preserved the statistical distribution of each variable.</p>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <div class="step-title">Feature selection with Random Forest + RFE</div>
+        <p class="step-text">With 50+ candidate features, we used a Random Forest to rank which urban elements had the most predictive power over social cohesion. We then combined this with Recursive Feature Elimination (RFE) to iteratively remove weak features and keep the most impactful 50 variables.</p>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <div class="step-title">Comparing 5 machine learning models</div>
+        <p class="step-text">We evaluated Random Forest, Linear Regression, Support Vector Regression (SVR), Ridge Regression, Polynomial Regression, and Gradient Boosting (GBM) using Leave-One-Out Cross Validation (LOOCV). Each model was scored on MAE, MSE, MAPE, and R². Random Forest came out on top.</p>
+      </div>
+    </div>
+    <div class="pipeline-step">
+      <div class="step-num">05</div>
+      <div class="step-body">
+        <div class="step-title">Shiny App deployment</div>
+        <p class="step-text">The winning model was integrated into a Shiny App — an interactive web application built in R. Users can select a city, modify urban feature sliders, and see predicted wellbeing scores update live on a neighborhood map. Designed to be used directly by Amvest's urban planning team.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Technical deep dive -->
+<div class="tech-section">
+  <div class="tech-inner">
+
+    <div class="section-label">
+      <span class="section-name">Technical deep dive</span>
+      <div class="section-line"></div>
+    </div>
+
+    <p class="tech-intro">Below is a walkthrough of the most important code sections, with explanations of the decisions behind each step. The full code is available on GitHub.</p>
+
+    <!-- Code 1: Correlation filtering -->
+    <div class="code-block">
+      <div class="code-label">
+        <span class="code-title">01 — Correlation-based feature filtering</span>
+        <span class="code-lang">R</span>
+      </div>
+      <div class="code-pre"><code><span class="code-comment"># Remove features with low correlation to the target variable</span>
+threshold <span class="code-keyword">&lt;-</span> <span class="code-number">0.2</span>
+
+filtered_matrix <span class="code-keyword">&lt;-</span>
+  significant_correlations[<span class="code-function">abs</span>(significant_correlations$Social_cohesion_21) <span class="code-keyword">&gt;=</span>
+  threshold, ]
+
+<span class="code-comment"># Transpose and filter again to keep only relevant features</span>
+transposed_matrix <span class="code-keyword">&lt;-</span> <span class="code-function">t</span>(filtered_matrix)
+cormatrix_refined <span class="code-keyword">&lt;-</span>
+  transposed_matrix[<span class="code-function">abs</span>(transposed_matrix$Social_cohesion_21) <span class="code-keyword">&gt;=</span> threshold, ]</code></div>
+      <div class="code-explainer">We set a threshold of 0.2: any feature with a correlation below this with our target variable (<strong>Social Cohesion score</strong>) was dropped. This reduced noise and prevented multicollinearity — a common problem when many urban features are naturally correlated with each other.</div>
+    </div>
+
+    <!-- Code 2: Missing value imputation -->
+    <div class="code-block">
+      <div class="code-label">
+        <span class="code-title">02 — Adaptive missing value imputation</span>
+        <span class="code-lang">R</span>
+      </div>
+      <div class="code-pre"><code><span class="code-keyword">for</span> (i <span class="code-keyword">in</span> <span class="code-number">1</span><span class="code-keyword">:</span><span class="code-function">ncol</span>(data)) {
+  skewness_current <span class="code-keyword">&lt;-</span> <span class="code-function">skewness</span>(data[,i], na.rm <span class="code-keyword">=</span> <span class="code-keyword">TRUE</span>)
+
+  <span class="code-keyword">if</span> (<span class="code-function">abs</span>(skewness_current) <span class="code-keyword">&lt;</span> <span class="code-number">0.5</span>) {
+    <span class="code-comment"># Low skewness → use mean</span>
+    data_clean[,i][<span class="code-function">is.na</span>(data[,i])] <span class="code-keyword">&lt;-</span> <span class="code-function">mean</span>(data[,i], na.rm <span class="code-keyword">=</span> <span class="code-keyword">TRUE</span>)
+
+  } <span class="code-keyword">else if</span> (<span class="code-function">abs</span>(skewness_current) <span class="code-keyword">&lt;</span> <span class="code-number">1</span>) {
+    <span class="code-comment"># Medium skewness → use KNN imputation (k=5)</span>
+    data_clean[,i] <span class="code-keyword">&lt;-</span> <span class="code-function">kNN</span>(data, variable <span class="code-keyword">=</span> i, k <span class="code-keyword">=</span> <span class="code-number">5</span>)[,i]
+
+  } <span class="code-keyword">else</span> {
+    <span class="code-comment"># High skewness → use median (robust to outliers)</span>
+    data_clean[,i][<span class="code-function">is.na</span>(data[,i])] <span class="code-keyword">&lt;-</span> <span class="code-function">median</span>(data[,i], na.rm <span class="code-keyword">=</span> <span class="code-keyword">TRUE</span>)
+  }
+}</code></div>
+      <div class="code-explainer">Instead of filling all missing values the same way, we adapted the strategy to each variable's distribution. <strong>Symmetric variables</strong> get the mean. <strong>Moderately skewed ones</strong> get KNN imputation — which looks at the 5 most similar neighborhoods to estimate the missing value. <strong>Heavily skewed variables</strong> get the median, which is more robust to extreme outliers.</div>
+    </div>
+
+    <!-- Code 3: Random Forest LOOCV -->
+    <div class="code-block">
+      <div class="code-label">
+        <span class="code-title">03 — Random Forest with Leave-One-Out Cross Validation</span>
+        <span class="code-lang">R</span>
+      </div>
+      <div class="code-pre"><code><span class="code-keyword">for</span> (i <span class="code-keyword">in</span> <span class="code-number">1</span><span class="code-keyword">:</span><span class="code-function">nrow</span>(data_fixed)) {
+  <span class="code-comment"># Train on all rows except i, test on row i</span>
+  train_data <span class="code-keyword">&lt;-</span> data_fixed[<span class="code-keyword">-</span>i, ]
+  test_data  <span class="code-keyword">&lt;-</span> data_fixed[i, ]
+
+  <span class="code-comment"># Fit the Random Forest</span>
+  rfmodel <span class="code-keyword">&lt;-</span> <span class="code-function">randomForest</span>(
+    Social_cohesion_21 <span class="code-keyword">~</span> .,
+    data   <span class="code-keyword">=</span> train_data,
+    ntree  <span class="code-keyword">=</span> <span class="code-number">1000</span>,
+    mtry   <span class="code-keyword">=</span> <span class="code-number">10</span>,
+    importance <span class="code-keyword">=</span> <span class="code-keyword">TRUE</span>
+  )
+
+  <span class="code-comment"># Predict and compute metrics</span>
+  pred       <span class="code-keyword">&lt;-</span> <span class="code-function">predict</span>(rfmodel, test_data)
+  mserf[i]   <span class="code-keyword">&lt;-</span> (pred <span class="code-keyword">-</span> test_data$Social_cohesion_21)<span class="code-keyword">^</span><span class="code-number">2</span>
+  maerf[i]   <span class="code-keyword">&lt;-</span> <span class="code-function">MAE</span>(pred, test_data$Social_cohesion_21)
+  maperf[i]  <span class="code-keyword">&lt;-</span> <span class="code-function">mean</span>(<span class="code-function">abs</span>((test_data$Social_cohesion_21 <span class="code-keyword">-</span> pred) <span class="code-keyword">/</span>
+                 test_data$Social_cohesion_21) <span class="code-keyword">*</span> <span class="code-number">100</span>)
+}</code></div>
+      <div class="code-explainer">With a small dataset (neighborhood-level data), standard train/test splits are unreliable. <strong>LOOCV</strong> solves this: we train on every observation except one, predict that one, then repeat for every row. This gives a reliable performance estimate without wasting data. We used 1000 trees and 10 features per split for a robust forest.</div>
+    </div>
+
+    <!-- Models comparison -->
+    <div class="code-block">
+      <div class="code-label">
+        <span class="code-title">04 — Model comparison results</span>
+        <span class="code-lang">R</span>
+      </div>
+      <div class="models-grid">
+        <div class="model-card model-winner">
+          <div class="model-name">Random Forest <span class="winner-badge">✓ Winner</span></div>
+          <div class="model-metric">Best overall R² and lowest MAE across LOOCV folds. Handled non-linear relationships between urban features effectively.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">GBM</div>
+          <div class="model-metric">Strong performance but slower to train. Slightly higher MAPE than Random Forest on this dataset size.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">SVR</div>
+          <div class="model-metric">Good with the scaled features but less interpretable for stakeholder communication.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">Ridge Regression</div>
+          <div class="model-metric">Useful baseline. Penalised correlated features well but limited by linearity assumption.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">Linear Regression</div>
+          <div class="model-metric">Weakest performer — urban features have complex non-linear interactions that linear models miss.</div>
+        </div>
+        <div class="model-card">
+          <div class="model-name">Polynomial Regression</div>
+          <div class="model-metric">Improved on linear but prone to overfitting on the smaller dataset.</div>
+        </div>
+      </div>
+      <div class="code-explainer">Random Forest won because urban data is inherently <strong>non-linear</strong> — the relationship between, say, green space and happiness isn't a straight line, and it interacts differently depending on other neighborhood characteristics. Random Forests handle these complex interactions naturally.</div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span class="footer-text">Emily Spano — Data Portfolio</span>
+  <a href="projects.html" style="font-family:'DM Mono',monospace;font-size:10px;color:#3a3848;text-decoration:none;letter-spacing:0.1em;">← Back to projects</a>
+</footer>
+
+</body>
+</html>
