@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harry Potter & Coffee Beans — Emily Spano</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #0a0a0f; color: #e8e4dd; min-height: 100vh; }
+nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; border-bottom: 1px solid #1a1a28; position: sticky; top: 0; background: #0a0a0fee; backdrop-filter: blur(12px); z-index: 100; }
+.nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.15em; color: #7c6fff; text-transform: uppercase; text-decoration: none; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 13px; color: #6a6870; text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: #e8e4dd; }
+.nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #3a3848; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
+.nav-back:hover { color: #7c6fff; }
+.hero { max-width: 900px; margin: 0 auto; padding: 4rem 3rem 2rem; }
+.hero-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+.badge-tableau { background: #0c1c2d; color: #5ab8ff; border: 1px solid #1a4570; }
+.badge-story { background: #1a0e1a; color: #cc88ff; border: 1px solid #4a2a70; }
+.hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.1; color: #f0ece4; margin-bottom: 1rem; }
+.hero-title em { font-style: italic; color: #5ab8ff; }
+.hero-sub { font-size: 1rem; color: #6a6870; line-height: 1.8; max-width: 680px; }
+.embed-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 3rem; }
+.embed-container { width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #1e1e2c; background: #0e0e18; aspect-ratio: 16/9; }
+.embed-container iframe { width: 100%; height: 100%; border: none; display: block; }
+.embed-note { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: #2a2838; text-transform: uppercase; text-align: center; margin-top: 0.75rem; }
+.stats-row { max-width: 900px; margin: 0 auto; padding: 0 3rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1a1a28; border-radius: 14px; overflow: hidden; border: 1px solid #1a1a28; }
+.stat { background: #0e0e18; padding: 1.25rem; text-align: center; }
+.stat-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #f0ece4; line-height: 1; margin-bottom: 4px; }
+.stat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: #3a3848; text-transform: uppercase; }
+.content { max-width: 900px; margin: 0 auto; padding: 1rem 3rem 5rem; }
+.section-label { display: flex; align-items: center; gap: 14px; margin: 3rem 0 2rem; }
+.section-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; color: #5ab8ff; text-transform: uppercase; white-space: nowrap; }
+.section-line { flex: 1; height: 1px; background: #1a1a28; }
+.intuitive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.int-card { background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 14px; padding: 1.5rem; }
+.int-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+.int-title { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #f0ece4; font-weight: 400; margin-bottom: 0.5rem; }
+.int-text { font-size: 0.82rem; color: #58565e; line-height: 1.75; }
+.houses-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.house-card { background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 14px; padding: 1.25rem; display: flex; align-items: flex-start; gap: 1rem; }
+.house-icon { font-size: 1.5rem; flex-shrink: 0; }
+.house-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.3rem; }
+.house-text { font-size: 0.8rem; color: #58565e; line-height: 1.6; }
+.gryffindor { border-left: 3px solid #cc2200; }
+.gryffindor .house-name { color: #ff6644; }
+.slytherin { border-left: 3px solid #2a7a2a; }
+.slytherin .house-name { color: #4dcc4d; }
+.ravenclaw { border-left: 3px solid #1a4a99; }
+.ravenclaw .house-name { color: #5599ff; }
+.hufflepuff { border-left: 3px solid #aa8800; }
+.hufflepuff .house-name { color: #ffcc22; }
+footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+.footer-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #2a2838; letter-spacing: 0.1em; }
+@media (max-width: 768px) {
+  nav, .hero, .embed-wrap, .content, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .stats-row, .houses-grid { grid-template-columns: 1fr 1fr; margin-left: 1.5rem; margin-right: 1.5rem; }
+  .intuitive-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="projects.html" class="nav-back">← Back to projects</a>
+  <a href="index.html" class="nav-logo">Emily Spano</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-meta">
+    <span class="badge badge-tableau">Tableau</span>
+    <span class="badge badge-story">Data Storytelling</span>
+  </div>
+  <h1 class="hero-title">Harry Potter<br>&amp; <em>Coffee Beans</em></h1>
+  <p class="hero-sub">A creative data storytelling project that draws a parallel between the four Hogwarts houses and coffee bean varieties — using two Kaggle datasets to demonstrate advanced Tableau visualisation and narrative techniques.</p>
+</section>
+
+<div class="embed-wrap">
+  <div class="embed-container">
+    <iframe src="https://public.tableau.com/views/HarryPotterandCoffeeBeans/Finalinfographic?:language=en-US&:display_count=n&:origin=viz_share_link&:embed=true&:showVizHome=no" allowfullscreen></iframe>
+  </div>
+  <p class="embed-note">Interactive infographic — hover over elements to explore</p>
+</div>
+
+<div class="stats-row">
+  <div class="stat"><div class="stat-num">2</div><div class="stat-label">Kaggle datasets</div></div>
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">Hogwarts houses</div></div>
+  <div class="stat"><div class="stat-num" style="color:#5ab8ff;">Story</div><div class="stat-label">Driven viz</div></div>
+</div>
+
+<section class="content">
+  <div class="section-label">
+    <span class="section-name">What this project does</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="intuitive-grid">
+    <div class="int-card">
+      <div class="int-icon">✨</div>
+      <div class="int-title">The concept</div>
+      <p class="int-text">Each Hogwarts house has a distinct personality — bold, cunning, intellectual, loyal. So do coffee beans. This project maps those personality traits to real coffee variety data, turning a whimsical analogy into a data-backed narrative.</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon">📊</div>
+      <div class="int-title">The data</div>
+      <p class="int-text">Two Kaggle datasets were merged: one containing Harry Potter house characteristics and one with detailed coffee bean tasting profiles — acidity, body, aroma, flavour notes. The overlap between descriptive attributes drove the matching logic.</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon">🎨</div>
+      <div class="int-title">The design</div>
+      <p class="int-text">The visualisation is built as a guided infographic — users journey through each house and its matched coffee, with custom colour palettes, house-themed styling, and interactive tooltips revealing detailed tasting notes and variety profiles.</p>
+    </div>
+  </div>
+
+  <div class="section-label">
+    <span class="section-name">The house matchings</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="houses-grid">
+    <div class="house-card gryffindor">
+      <div class="house-icon">🦁</div>
+      <div>
+        <div class="house-name">Gryffindor</div>
+        <div class="house-text">Bold, brave, passionate. Matched to a high-acidity, full-bodied coffee with intense flavour — a bean that makes an immediate, confident impression.</div>
+      </div>
+    </div>
+    <div class="house-card slytherin">
+      <div class="house-icon">🐍</div>
+      <div>
+        <div class="house-name">Slytherin</div>
+        <div class="house-text">Ambitious, complex, refined. Matched to a dark, smooth roast with earthy undertones — sophisticated and not immediately obvious.</div>
+      </div>
+    </div>
+    <div class="house-card ravenclaw">
+      <div class="house-icon">🦅</div>
+      <div>
+        <div class="house-name">Ravenclaw</div>
+        <div class="house-text">Intellectual, nuanced, precise. Matched to a light roast with delicate floral and citrus notes — complex enough to reward careful attention.</div>
+      </div>
+    </div>
+    <div class="house-card hufflepuff">
+      <div class="house-icon">🦡</div>
+      <div>
+        <div class="house-name">Hufflepuff</div>
+        <div class="house-text">Warm, reliable, approachable. Matched to a balanced medium roast with nutty, caramel notes — comforting and universally enjoyable.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">Emily Spano — Data Portfolio</span>
+  <a href="projects.html" style="font-family:'DM Mono',monospace;font-size:10px;color:#3a3848;text-decoration:none;letter-spacing:0.1em;">← Back to projects</a>
+</footer>
+</body>
+</html>
