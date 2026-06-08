@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales KPI Dashboard — Emily Spano</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #0a0a0f; color: #e8e4dd; min-height: 100vh; }
+nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; border-bottom: 1px solid #1a1a28; position: sticky; top: 0; background: #0a0a0fee; backdrop-filter: blur(12px); z-index: 100; }
+.nav-logo { font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 0.15em; color: #7c6fff; text-transform: uppercase; text-decoration: none; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 13px; color: #6a6870; text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: #e8e4dd; }
+.nav-back { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: #3a3848; text-transform: uppercase; text-decoration: none; transition: color 0.2s; }
+.nav-back:hover { color: #7c6fff; }
+.hero { max-width: 900px; margin: 0 auto; padding: 4rem 3rem 2rem; }
+.hero-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.badge { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+.badge-tableau { background: #0c1c2d; color: #5ab8ff; border: 1px solid #1a4570; }
+.badge-client { background: #130e00; color: #ffd166; border: 1px solid #4a3900; }
+.hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.1; color: #f0ece4; margin-bottom: 1rem; }
+.hero-title em { font-style: italic; color: #5ab8ff; }
+.hero-sub { font-size: 1rem; color: #6a6870; line-height: 1.8; max-width: 680px; }
+.embed-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 3rem; }
+.embed-container { width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #1e1e2c; background: #0e0e18; aspect-ratio: 16/9; }
+.embed-container iframe { width: 100%; height: 100%; border: none; display: block; }
+.embed-note { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: #2a2838; text-transform: uppercase; text-align: center; margin-top: 0.75rem; }
+.stats-row { max-width: 900px; margin: 0 auto; padding: 0 3rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1a1a28; border-radius: 14px; overflow: hidden; border: 1px solid #1a1a28; }
+.stat { background: #0e0e18; padding: 1.25rem; text-align: center; }
+.stat-num { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #f0ece4; line-height: 1; margin-bottom: 4px; }
+.stat-num em { color: #5ab8ff; font-style: normal; font-size: 1.2rem; }
+.stat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: #3a3848; text-transform: uppercase; }
+.content { max-width: 900px; margin: 0 auto; padding: 1rem 3rem 5rem; }
+.section-label { display: flex; align-items: center; gap: 14px; margin: 3rem 0 2rem; }
+.section-name { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; color: #5ab8ff; text-transform: uppercase; white-space: nowrap; }
+.section-line { flex: 1; height: 1px; background: #1a1a28; }
+.intuitive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.int-card { background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 14px; padding: 1.5rem; }
+.int-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+.int-title { font-family: 'DM Serif Display', serif; font-size: 1rem; color: #f0ece4; font-weight: 400; margin-bottom: 0.5rem; }
+.int-text { font-size: 0.82rem; color: #58565e; line-height: 1.75; }
+.feature-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.feature-item { display: flex; align-items: flex-start; gap: 1rem; background: #0e0e18; border: 1px solid #1e1e2c; border-radius: 12px; padding: 1rem 1.25rem; }
+.feature-dot { width: 6px; height: 6px; border-radius: 50%; background: #5ab8ff; flex-shrink: 0; margin-top: 6px; }
+.feature-text { font-size: 0.85rem; color: #6a6870; line-height: 1.7; }
+.feature-text strong { color: #c8c4bc; font-weight: 500; }
+footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+.footer-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #2a2838; letter-spacing: 0.1em; }
+@media (max-width: 768px) {
+  nav, .hero, .embed-wrap, .content, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); margin-left: 1.5rem; margin-right: 1.5rem; }
+  .intuitive-grid { grid-template-columns: 1fr; }
+  .embed-container { aspect-ratio: 4/3; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="projects.html" class="nav-back">← Back to projects</a>
+  <a href="index.html" class="nav-logo">Emily Spano</a>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-meta">
+    <span class="badge badge-client">Client project</span>
+    <span class="badge badge-tableau">Tableau</span>
+  </div>
+  <h1 class="hero-title">Sales <em>KPI Dashboard</em></h1>
+  <p class="hero-sub">An advanced interactive Tableau dashboard built to monitor key sales performance indicators for a client operating in the public administration sector. Designed for clarity, speed, and decision-making at a glance.</p>
+</section>
+
+<div class="embed-wrap">
+  <div class="embed-container">
+    <iframe src="https://public.tableau.com/views/SalesDashboardKPI_17346089105640/SalesDashboard?:language=en-US&:display_count=n&:origin=viz_share_link&:embed=true&:showVizHome=no" allowfullscreen></iframe>
+  </div>
+  <p class="embed-note">Interactive report — best viewed on a large screen</p>
+</div>
+
+<div class="stats-row">
+  <div class="stat"><div class="stat-num" style="color:#5ab8ff;">KPI</div><div class="stat-label">Driven design</div></div>
+  <div class="stat"><div class="stat-num">📊</div><div class="stat-label">Interactive filters</div></div>
+  <div class="stat"><div class="stat-num" style="color:#5ab8ff;">Live</div><div class="stat-label">Tableau Public</div></div>
+</div>
+
+<section class="content">
+  <div class="section-label">
+    <span class="section-name">What this dashboard does</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="intuitive-grid">
+    <div class="int-card">
+      <div class="int-icon">📈</div>
+      <div class="int-title">Sales at a glance</div>
+      <p class="int-text">The dashboard provides an immediate overview of total sales, profit, and quantity sold — with clear comparisons against the previous year so trends are visible instantly without digging into raw data.</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon">🔍</div>
+      <div class="int-title">Interactive exploration</div>
+      <p class="int-text">Users can filter by time period, product category, and segment. Every view updates dynamically — allowing stakeholders to drill into the specific slice of data they care about without needing technical skills.</p>
+    </div>
+    <div class="int-card">
+      <div class="int-icon">⚡</div>
+      <div class="int-title">Advanced Tableau features</div>
+      <p class="int-text">The dashboard showcases calculated fields, dual-axis charts, dynamic reference lines, and custom tooltips — demonstrating Tableau's full capability for polished, production-grade business reporting.</p>
+    </div>
+  </div>
+
+  <div class="section-label">
+    <span class="section-name">Key features</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="feature-list">
+    <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>Year-over-year comparison</strong> — Sales and profit metrics shown alongside prior year values, with percentage change indicators to highlight growth or decline at a glance.</div></div>
+    <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>Sales & profit trend lines</strong> — Time series charts reveal seasonal patterns and long-term trends across the full reporting period.</div></div>
+    <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>Category breakdown</strong> — Sales and profit split by product sub-category, ranked to surface the highest and lowest performers immediately.</div></div>
+    <div class="feature-item"><div class="feature-dot"></div><div class="feature-text"><strong>Dynamic filtering</strong> — All views respond in real time to user-selected filters, making the dashboard a self-service tool for non-technical stakeholders.</div></div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">Emily Spano — Data Portfolio</span>
+  <a href="projects.html" style="font-family:'DM Mono',monospace;font-size:10px;color:#3a3848;text-decoration:none;letter-spacing:0.1em;">← Back to projects</a>
+</footer>
+</body>
+</html>
