@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Data Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: #0a0a0f;
+  color: #e8e4dd;
+  min-height: 100vh;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  border-bottom: 1px solid #1a1a28;
+  position: sticky;
+  top: 0;
+  background: #0a0a0fee;
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  color: #6a6870;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: #e8e4dd;
+}
+
+.hero {
+  padding: 5rem 3rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #f0ece4;
+  margin-bottom: 1.25rem;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: #7c6fff;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: #6a6870;
+  max-width: 560px;
+  line-height: 1.8;
+}
+
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 3rem 6rem;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 3rem 0 1.75rem;
+}
+
+.section-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: #7c6fff;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.section-count {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #3a3848;
+  background: #13131d;
+  border: 1px solid #22222f;
+  border-radius: 20px;
+  padding: 2px 9px;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: #1a1a28;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+  nav { padding: 1.25rem 1.5rem; }
+  .hero, .main { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+@media (max-width: 600px) {
+  .cards-grid { grid-template-columns: 1fr; }
+  .featured-card { grid-template-columns: 1fr !important; }
+  .featured-card .card-img { height: 180px !important; border-right: none !important; border-bottom: 1px solid #1e1e2e !important; }
+}
+
+.card {
+  background: #0e0e18;
+  border: 1px solid #1e1e2c;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  border-color: #7c6fff44;
+  transform: translateY(-3px);
+}
+
+.featured-card {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  grid-template-columns: 1.1fr 1fr;
+  display: grid;
+}
+
+.card-img {
+  width: 100%;
+  height: 160px;
+  background: #131320;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  border-bottom: 1px solid #1e1e2c;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.featured-card .card-img {
+  height: auto;
+  min-height: 200px;
+  border-bottom: none;
+  border-right: 1px solid #1e1e2c;
+}
+
+.card-img-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7rem;
+  pointer-events: none;
+}
+
+.card-img-icon { position: relative; z-index: 1; }
+
+.card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-featured-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #7c6fff;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.card-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+
+.badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  padding: 3px 9px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.badge-ml    { background: #1a1030; color: #9b8fff; border: 1px solid #3a2a70; }
+.badge-tableau { background: #0c1c2d; color: #5ab8ff; border: 1px solid #1a4570; }
+.badge-pbi   { background: #1a1300; color: #ffd166; border: 1px solid #4a3900; }
+.badge-r     { background: #0c1e16; color: #4dffaa; border: 1px solid #1a4830; }
+
+.card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #f0ece4;
+  margin-bottom: 0.6rem;
+  line-height: 1.35;
+}
+
+.card-desc {
+  font-size: 0.8rem;
+  color: #58565e;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.card-tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  font-size: 10px;
+  color: #3a3848;
+  background: #13131d;
+  border: 1px solid #1e1e2c;
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.card-footer {
+  border-top: 1px solid #1a1a28;
+  padding-top: 0.9rem;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #7c6fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: gap 0.2s;
+}
+
+.card-link:hover { gap: 9px; }
+
+.card-link svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.embed-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: #ffd166;
+  background: #1a1300;
+  border: 1px solid #4a3900;
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+/* Power BI embed section */
+.embed-section {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid #1a1a28;
+}
+
+.embed-coming-soon {
+  background: #0e0e18;
+  border: 1px dashed #2a2a40;
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+}
+
+.embed-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.embed-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem;
+  color: #f0ece4;
+  margin-bottom: 0.5rem;
+}
+
+.embed-desc {
+  font-size: 0.85rem;
+  color: #4a4858;
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+footer {
+  border-top: 1px solid #1a1a28;
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #2a2838;
+  letter-spacing: 0.1em;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Emily Spano</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <p class="eyebrow">Portfolio</p>
+  <h1 class="hero-title">Selected <em>Projects</em></h1>
+  <p class="hero-sub">A collection of data science, machine learning, and business intelligence work spanning academic research and real-world client engagements.</p>
+</section>
+
+<main class="main">
+
+  <!-- ML & Data Science -->
+  <div class="section-label">
+    <span class="section-name">ML &amp; Data Science</span>
+    <span class="section-count">03</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card featured-card">
+      <div class="card-img" style="background:#0e0e20;">
+        <div class="card-img-bg">🗺</div>
+        <span class="card-img-icon" style="font-size:3rem;">🏙️</span>
+      </div>
+      <div class="card-body">
+        <p class="card-featured-tag">★ Featured project</p>
+        <div class="card-badges">
+          <span class="badge badge-r">R</span>
+          <span class="badge badge-ml">Random Forest</span>
+          <span class="badge badge-ml">Shiny</span>
+        </div>
+        <h3 class="card-title">Smart Service Shiny App for Urban Development</h3>
+        <p class="card-desc">Commissioned by Amvest, a Dutch urban development company. Developed an interactive Shiny App to predict social quality indicators — loneliness, safety, quality of life — across neighborhoods in The Hague and Amsterdam. Multiple Random Forest models trained on impactful urban features power the predictions behind the app.</p>
+        <div class="card-tags">
+          <span class="tag">Urban Development</span>
+          <span class="tag">Forecasting</span>
+          <span class="tag">Geospatial</span>
+          <span class="tag">Excel</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="urban-development.html">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background:#0e141a;">
+        <div class="card-img-bg">💬</div>
+        <span class="card-img-icon">📊</span>
+      </div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-r">R</span>
+          <span class="badge badge-ml">NLP</span>
+        </div>
+        <h3 class="card-title">Sentiment Analysis on Restaurant Reviews</h3>
+        <p class="card-desc">Sentiment analysis performed in R on restaurant reviews to investigate rating scores. Includes a forecast of rating scores accounting for polarity sentiment and day of the week. Applicable to brand reputation management and product development.</p>
+        <div class="card-tags">
+          <span class="tag">NLP</span>
+          <span class="tag">Forecasting</span>
+          <span class="tag">Data Cleaning</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="sentiment-analysis.html">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background:#0e141a;">
+        <div class="card-img-bg">👁</div>
+        <span class="card-img-icon">🔍</span>
+      </div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-r">R</span>
+          <span class="badge badge-ml">Computer Vision</span>
+        </div>
+        <h3 class="card-title">Facial Expression Image Detection</h3>
+        <p class="card-desc">Applied image detection and classification models to identify disgust expressions across a facial image dataset. Multiple ML classification models trained and compared. Use cases in emotion detection and automated image classification pipelines.</p>
+        <div class="card-tags">
+          <span class="tag">Computer Vision</span>
+          <span class="tag">Classification</span>
+          <span class="tag">Image Processing</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="image-detection.html">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Dashboards & Visualization -->
+  <div class="section-label">
+    <span class="section-name">Dashboards &amp; Visualization</span>
+    <span class="section-count">05</span>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="card">
+      <div class="card-img" style="background:#130e00;">
+        <div class="card-img-bg">🏢</div>
+        <span class="card-img-icon">🏢</span>
+      </div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-pbi">Power BI</span>
+          <span class="badge badge-pbi">DAX</span>
+        </div>
+        <h3 class="card-title">Administration &amp; Marketing BI Suite</h3>
+        <p class="card-desc">Comprehensive BI report built for a real client — full financial statements (income statement, balance sheet, cash flow with EBITDA, EBIT, PFN), accounts receivable &amp; payable, orders and invoicing with client credit ratings, and a marketing &amp; customer analytics area (ROI, CLV, revenue by channel). Production-grade reporting on real-world data.</p>
+        <div class="card-tags">
+          <span class="tag">Financial Statements</span>
+          <span class="tag">Credit Mgmt</span>
+          <span class="tag">Marketing</span>
+          <span class="tag">Client project</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="enterprise-bi.html" target="_blank">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <span class="embed-badge">Live embed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background:#130e00;">
+        <div class="card-img-bg">💠</div>
+        <span class="card-img-icon">💰</span>
+      </div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-pbi">Power BI</span>
+          <span class="badge badge-pbi">DAX</span>
+        </div>
+        <h3 class="card-title">Sales &amp; Commercial Performance</h3>
+        <p class="card-desc">Power BI report for a manufacturing client covering the full commercial cycle — revenue by business unit and country, budget vs actual, sales by agent, order fulfilment with just-in-time stock, and a CRM pipeline of opportunities and deals.</p>
+        <div class="card-tags">
+          <span class="tag">Revenue</span>
+          <span class="tag">Budget vs Actual</span>
+          <span class="tag">Orders</span>
+          <span class="tag">CRM</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="financial-analysis.html" target="_blank">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <span class="embed-badge">Live embed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background:#0c1e16;">
+        <div class="card-img-bg">🌱</div>
+        <span class="card-img-icon">🌍</span>
+      </div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-pbi">Power BI</span>
+          <span class="badge badge-pbi">DAX</span>
+        </div>
+        <h3 class="card-title">Operations &amp; ESG Dashboard</h3>
+        <p class="card-desc">Power BI report for a real client uniting operations and sustainability — retail &amp; product sales, ESG environmental indicators (CO₂, water, energy, waste recycling by site), HR &amp; workplace safety with employee scorecards, credit-line exposure and cash-flow monitoring.</p>
+        <div class="card-tags">
+          <span class="tag">ESG</span>
+          <span class="tag">Sustainability</span>
+          <span class="tag">HR &amp; Safety</span>
+          <span class="tag">Cash Flow</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="customer-spending.html" target="_blank">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <span class="embed-badge">Live embed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background:#080e18;">
+        <div class="card-img-bg">📊</div>
+        <span class="card-img-icon">⚡</span>
+      </div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-tableau">Tableau</span>
+        </div>
+        <h3 class="card-title">Sales KPI Dashboard</h3>
+        <p class="card-desc">Advanced Tableau dashboard for interactive sales KPI tracking. Showcases Tableau's most impactful data visualization and interactivity features. Best viewed on a large screen.</p>
+        <div class="card-tags">
+          <span class="tag">KPI</span>
+          <span class="tag">Sales</span>
+          <span class="tag">Interactivity</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="sales-kpi.html">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img" style="background:#080e18;">
+        <div class="card-img-bg">⚗</div>
+        <span class="card-img-icon">☕</span>
+      </div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge badge-tableau">Tableau</span>
+        </div>
+        <h3 class="card-title">Harry Potter &amp; Coffee Beans</h3>
+        <p class="card-desc">A creative data storytelling project drawing a parallel between Harry Potter house traits and coffee bean varieties across two Kaggle datasets. Designed to demonstrate advanced Tableau features through a narrative, engaging lens.</p>
+        <div class="card-tags">
+          <span class="tag">Storytelling</span>
+          <span class="tag">Data Viz</span>
+          <span class="tag">Kaggle</span>
+        </div>
+        <div class="card-footer">
+          <a class="card-link" href="harry-potter.html">
+            View project
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <span class="footer-text">Emily Spano — Data Portfolio</span>
+  <span class="footer-text">BI Analyst · Rome, Italy</span>
+</footer>
+
+</body>
+</html>
