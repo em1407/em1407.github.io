@@ -23,9 +23,9 @@ nav { display: flex; align-items: center; justify-content: space-between; paddin
 .hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 400; line-height: 1.1; color: #f0ece4; margin-bottom: 1rem; }
 .hero-title em { font-style: italic; color: #5ab8ff; }
 .hero-sub { font-size: 1rem; color: #6a6870; line-height: 1.8; max-width: 680px; }
-.embed-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 3rem; }
-.embed-container { width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #1e1e2c; background: #0e0e18; aspect-ratio: 16/9; }
-.embed-container iframe { width: 100%; height: 100%; border: none; display: block; }
+.embed-wrap { max-width: 1700px; margin: 0 auto; padding: 2rem 1.5rem; }
+.embed-container { width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #1e1e2c; background: #0e0e18; }
+.embed-container tableau-viz, .embed-container iframe { width: 100%; border: none; display: block; }
 .embed-note { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: #2a2838; text-transform: uppercase; text-align: center; margin-top: 0.75rem; }
 .stats-row { max-width: 900px; margin: 0 auto; padding: 0 3rem 2rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #1a1a28; border-radius: 14px; overflow: hidden; border: 1px solid #1a1a28; }
 .stat { background: #0e0e18; padding: 1.25rem; text-align: center; }
@@ -84,7 +84,8 @@ footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align
 
 <div class="embed-wrap">
   <div class="embed-container">
-    <iframe src="https://public.tableau.com/views/HarryPotterandCoffeeBeans/Finalinfographic?:language=en-US&:display_count=n&:origin=viz_share_link&:embed=true&:showVizHome=no" allowfullscreen></iframe>
+    <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+    <tableau-viz src="https://public.tableau.com/views/HarryPotterandCoffeeBeans/Finalinfographic" toolbar="bottom" hide-tabs></tableau-viz>
   </div>
   <p class="embed-note">Interactive infographic — hover over elements to explore</p>
 </div>
