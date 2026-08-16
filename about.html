@@ -438,7 +438,7 @@ footer {
     <p class="eyebrow">About me</p>
     <h1 class="hero-title">Business Intelligence<br><em>Analyst</em></h1>
     <p class="hero-bio">
-      I'm Emily, a <strong>BI Analyst based in Rome, Italy</strong>, currently working at Metriks.ai where I deliver data-driven dashboards and reporting solutions to clients across multiple industries.<br><br>
+      I'm Emily, a <strong>BI Analyst based in Rome, Italy</strong>, currently working at Bip where I deliver data-driven dashboards and reporting solutions to clients across multiple industries.<br><br>
       My background bridges <strong>linguistics, tourism management, and data science</strong> — an unusual path that gives me a distinct perspective: I translate complex data into clear, human stories that drive decisions.
     </p>
     <div class="skills-row">
@@ -457,14 +457,14 @@ footer {
     </div>
   </div>
   <div class="hero-photo">
-    <img src="YOUR_PHOTO_URL" alt="Emily Spano" onerror="this.style.display='none'">
+    <img src="emily.jpg" alt="Emily Spano" loading="lazy" onerror="this.style.display='none'">
     <div class="photo-label">Emily Spano · Rome</div>
   </div>
 </section>
 
 <div class="stats-strip">
   <div class="stat">
-    <div class="stat-num">1<em>+</em></div>
+    <div class="stat-num"><span id="yearsExp">1</span><em>+</em></div>
     <div class="stat-label">Years experience</div>
   </div>
   <div class="stat">
@@ -476,7 +476,7 @@ footer {
     <div class="stat-label">Industries served</div>
   </div>
   <div class="stat">
-    <div class="stat-num">4</div>
+    <div class="stat-num">3</div>
     <div class="stat-label">Languages spoken</div>
   </div>
 </div>
@@ -522,10 +522,20 @@ footer {
 
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <p class="tl-period">2024 — Present</p>
-      <h3 class="tl-title">BI Analyst · Metriks.ai · Rome, Italy</h3>
+      <p class="tl-period">2025</p>
+      <h3 class="tl-title">BI Analyst · Metriks.ai · Arezzo, Italy</h3>
       <p class="tl-text">
-        Currently working as a Business Intelligence Analyst at Metriks.ai, delivering personalised and strategic dashboards to clients across multiple sectors. On a daily basis I monitor the entire data workflow, build reporting solutions in Power BI, and work closely with stakeholders to continuously refine the output. Outside of work I keep active at the gym, explore new places whenever possible, and am always focused on learning something new.
+        My first professional role as a Business Intelligence Analyst at Metriks.ai in Arezzo, where I delivered personalised and strategic dashboards to clients across multiple sectors. I monitored the entire data workflow end to end and built reporting solutions in Power BI, working closely with stakeholders to continuously refine the output.
+      </p>
+      <span class="tl-badge">First role</span>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <p class="tl-period">2026 — Present</p>
+      <h3 class="tl-title">BI Analyst · Bip · Rome, Italy</h3>
+      <p class="tl-text">
+        Currently working as a Business Intelligence Analyst at Bip in Rome, building production-grade reporting solutions in Power BI and partnering with stakeholders to turn data into decisions. Outside of work I keep active at the gym, explore new places whenever possible, and am always focused on learning something new.
       </p>
       <span class="tl-badge">Current role</span>
     </div>
@@ -596,5 +606,19 @@ footer {
   <span class="footer-text">BI Analyst · Rome, Italy</span>
 </footer>
 
+<script>
+/* Anni di esperienza calcolati automaticamente da Aprile 2025,
+   con step di 0,5 ogni 6 mesi (si aggiorna da solo nel tempo). */
+(function () {
+  var start = new Date(2025, 3, 1); // 3 = Aprile
+  var now = new Date();
+  var months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+  if (months < 0) months = 0;
+  var years = Math.floor(months / 6) / 2;
+  var display = (years % 1 === 0) ? years.toFixed(0) : years.toFixed(1);
+  var el = document.getElementById('yearsExp');
+  if (el) el.textContent = display;
+})();
+</script>
 </body>
 </html>

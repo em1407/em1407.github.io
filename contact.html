@@ -127,7 +127,11 @@ footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align
 
   <div class="form-side">
     <p class="form-title">Send a message</p>
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <form action="https://formsubmit.co/emilyspano00@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New message from your portfolio!">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://em1407.github.io/contact.html?sent=1">
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Name</label>
@@ -147,7 +151,7 @@ footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align
         <textarea name="message" class="form-textarea" placeholder="Tell me more..." required></textarea>
       </div>
       <button type="submit" class="btn-submit">Send message →</button>
-      <p class="form-note">I'll get back to you within 48 hours.</p>
+      <p class="form-note" id="formNote">I'll get back to you within 48 hours.</p>
     </form>
   </div>
 </section>
@@ -156,5 +160,18 @@ footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align
   <span class="footer-text">Emily Spano — Data Portfolio</span>
   <span class="footer-text">BI Analyst · Rome, Italy</span>
 </footer>
+
+<script>
+/* Mostra un messaggio di conferma dopo l'invio (redirect da FormSubmit con ?sent=1) */
+(function () {
+  if (window.location.search.indexOf('sent=1') !== -1) {
+    var note = document.getElementById('formNote');
+    if (note) {
+      note.textContent = '✓ Message sent — thank you! I\'ll get back to you soon.';
+      note.style.color = '#4dffaa';
+    }
+  }
+})();
+</script>
 </body>
 </html>

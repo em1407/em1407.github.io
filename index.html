@@ -104,14 +104,14 @@ footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align
   <div class="hero-left">
     <p class="eyebrow">BI Analyst · Rome, Italy</p>
     <h1 class="hero-title">Turning data<br>into <em>decisions.</em></h1>
-    <p class="hero-sub">I'm Emily, a <strong>Business Intelligence Analyst</strong> at Metriks.ai. I build dashboards, reporting systems, and data-driven tools that help organisations make better decisions — faster.</p>
+    <p class="hero-sub">I'm Emily, a <strong>Business Intelligence Analyst</strong> at Bip. I build dashboards, reporting systems, and data-driven tools that help organisations make better decisions — faster.</p>
     <div class="cta-row">
       <a href="projects.html" class="btn-primary">View my projects</a>
       <a href="contact.html" class="btn-secondary">Get in touch</a>
     </div>
     <div class="hero-meta">
       <div class="meta-item">
-        <div class="meta-num">1<em>yr</em></div>
+        <div class="meta-num"><span id="yearsExp">1</span><em>yrs</em></div>
         <div class="meta-label">Experience</div>
       </div>
       <div class="meta-item">
@@ -119,14 +119,14 @@ footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align
         <div class="meta-label">Projects</div>
       </div>
       <div class="meta-item">
-        <div class="meta-num">4</div>
+        <div class="meta-num">3</div>
         <div class="meta-label">Languages</div>
       </div>
     </div>
   </div>
   <div class="hero-photo">
     <div class="photo-wrap">
-      <img src="emily.jpg" alt="Emily Spano" onerror="this.parentElement.style.background='#1a1a28'">
+      <img src="emily.jpg" alt="Emily Spano" loading="eager" onerror="this.parentElement.style.background='#1a1a28'">
     </div>
     <div class="photo-accent">
       <div class="photo-accent-num">BI</div>
@@ -198,5 +198,20 @@ footer { border-top: 1px solid #1a1a28; padding: 2rem 3rem; display: flex; align
   <span class="footer-text">Emily Spano — Data Portfolio</span>
   <span class="footer-text">BI Analyst · Rome, Italy</span>
 </footer>
+
+<script>
+/* Anni di esperienza calcolati automaticamente da Aprile 2025,
+   con step di 0,5 ogni 6 mesi (si aggiorna da solo nel tempo). */
+(function () {
+  var start = new Date(2025, 3, 1); // 3 = Aprile (mesi 0-based)
+  var now = new Date();
+  var months = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+  if (months < 0) months = 0;
+  var years = Math.floor(months / 6) / 2;
+  var display = (years % 1 === 0) ? years.toFixed(0) : years.toFixed(1);
+  var el = document.getElementById('yearsExp');
+  if (el) el.textContent = display;
+})();
+</script>
 </body>
 </html>
